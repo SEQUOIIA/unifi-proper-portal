@@ -1,0 +1,34 @@
+base address: https://www.facebook.com
+
+/v2.9/dialog/oauth
+	query parameters:
+		client_id : app-id
+		redirect_uri : redirect-uri
+		response_type : 'code' or 'token' or 'code%20token' or 'granted_scopes', see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow
+		scope : see https://developers.facebook.com/docs/facebook-login/permissions
+
+	example:
+		https://www.facebook.com/v2.9/dialog/oauth?client_id=x&redirect_uri=x&response_type=token&scope=public_profile,email,user_friends
+
+--------------------------------------
+
+base address: https://graph.facebook.com
+
+/v2.9/me
+	query parameters:
+		access_token : token
+		fields: email, id, gender, name, about, work, link, picture, see https://developers.facebook.com/docs/graph-api/reference/user/
+	example:
+		https://graph.facebook.com/v2.9/me?fields=email,id,gender,name,about,work,link,picture&access_token=x
+
+/v2.9/me/picture
+	query parameters:
+		access_token : token
+		type : small, normal, album, large, square, see https://developers.facebook.com/docs/graph-api/reference/user/picture/
+	example:
+		https://graph.facebook.com/v2.9/me/picture?type=large&access_token=x
+
+/v2.9/me/taggable_friends
+	query parameters:
+		access_token : token
+		limit : int, e.g. 5000
