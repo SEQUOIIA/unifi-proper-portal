@@ -8,7 +8,7 @@ base address: https://www.facebook.com
 		scope : see https://developers.facebook.com/docs/facebook-login/permissions
 
 	example:
-		https://www.facebook.com/v2.9/dialog/oauth?client_id=x&redirect_uri=x&response_type=token&scope=public_profile,email,user_friends
+		https://www.facebook.com/v2.9/dialog/oauth?client_id=x&redirect_uri=x&response_type=code&scope=public_profile,email,user_friends
 
 --------------------------------------
 
