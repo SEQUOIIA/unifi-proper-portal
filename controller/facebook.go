@@ -102,6 +102,25 @@ func getProfile(atr * oAuth_accessTokenResponse) * model.FacebookUserNormal{
 	return profile
 }
 
+func newUserCookie(w http.ResponseWriter, id string) {
+	/*
+	cJar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var cookies []*http.Cookie
+	*/
+	var idCookie *http.Cookie = &http.Cookie{
+		Name: "UNIFI_ID",
+		Value: id,
+		Path: "/",
+		Domain: "localhost",
+	}
+
+	http.SetCookie(w, idCookie)
+}
+
 func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
 	code := r.URL.Query().Get("code")
 
@@ -120,6 +139,8 @@ func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
 
 
 	Users[user.Id] = user
+	newUserCookie(w, user.Id)
+
 	w.WriteHeader(200)
 	w.Write([]byte("gg"))
 }
