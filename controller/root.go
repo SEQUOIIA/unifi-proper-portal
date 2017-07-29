@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"net/http"
 	"fmt"
 	"log"
+	"net/http"
 )
 
-func Root(w http.ResponseWriter, r * http.Request) {
+func Root(w http.ResponseWriter, r *http.Request) {
 	var output string = ""
 	var idFound bool = true
 	id, err := r.Cookie("UPP_ID")

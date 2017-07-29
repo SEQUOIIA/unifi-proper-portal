@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/sequoiia/unifi-proper-portal/controller"
 	"github.com/urfave/negroni"
 	"net/http"
-	"github.com/sequoiia/unifi-proper-portal/controller"
 )
 
 func main() {

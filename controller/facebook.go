@@ -1,19 +1,18 @@
 package controller
 
 import (
-	"net/http"
-	"log"
 	"encoding/json"
 	"github.com/sequoiia/unifi-proper-portal/model"
+	"log"
+	"net/http"
 )
 
 var graphBaseURL string = "https://graph.facebook.com"
 
-var HttpClient * http.Client = http.DefaultClient
-
+var HttpClient *http.Client = http.DefaultClient
 
 func convertCodeToShortLivedToken(code string) *model.OAuth_accessTokenResponse {
-	req, err := http.NewRequest("GET", graphBaseURL + "/v2.10/oauth/access_token", nil)
+	req, err := http.NewRequest("GET", graphBaseURL+"/v2.10/oauth/access_token", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +29,6 @@ func convertCodeToShortLivedToken(code string) *model.OAuth_accessTokenResponse 
 		log.Fatal(err)
 	}
 
-
 	jDecoder := json.NewDecoder(resp.Body)
 	var accessTokenResponse *model.OAuth_accessTokenResponse = &model.OAuth_accessTokenResponse{}
 	err = jDecoder.Decode(accessTokenResponse)
@@ -42,7 +40,7 @@ func convertCodeToShortLivedToken(code string) *model.OAuth_accessTokenResponse 
 }
 
 func convertShortLivedTokenToLongLivedToken(atr *model.OAuth_accessTokenResponse) {
-	req, err := http.NewRequest("GET", graphBaseURL + "/oauth/access_token", nil)
+	req, err := http.NewRequest("GET", graphBaseURL+"/oauth/access_token", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,8 +67,8 @@ func convertShortLivedTokenToLongLivedToken(atr *model.OAuth_accessTokenResponse
 	//return atr
 }
 
-func getProfile(atr *model.OAuth_accessTokenResponse) * model.FacebookUserNormal{
-	req, err := http.NewRequest("GET", graphBaseURL + "/v2.9/me", nil)
+func getProfile(atr *model.OAuth_accessTokenResponse) *model.FacebookUserNormal {
+	req, err := http.NewRequest("GET", graphBaseURL+"/v2.9/me", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -86,7 +84,7 @@ func getProfile(atr *model.OAuth_accessTokenResponse) * model.FacebookUserNormal
 	}
 
 	jDecoder := json.NewDecoder(resp.Body)
-	var profile * model.FacebookUserNormal = &model.FacebookUserNormal{}
+	var profile *model.FacebookUserNormal = &model.FacebookUserNormal{}
 	err = jDecoder.Decode(profile)
 	if err != nil {
 		log.Fatal()
@@ -97,24 +95,24 @@ func getProfile(atr *model.OAuth_accessTokenResponse) * model.FacebookUserNormal
 
 func newUserCookie(w http.ResponseWriter, id string) {
 	/*
-	cJar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
-	if err != nil {
-		log.Fatal(err)
-	}
+		cJar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	var cookies []*http.Cookie
+		var cookies []*http.Cookie
 	*/
 	var idCookie *http.Cookie = &http.Cookie{
-		Name: "UPP_ID",
-		Value: id,
-		Path: "/",
+		Name:   "UPP_ID",
+		Value:  id,
+		Path:   "/",
 		Domain: "localhost",
 	}
 
 	http.SetCookie(w, idCookie)
 }
 
-func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
+func OAuthRedirect(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 
 	// Convert code to short-lived access token
@@ -129,7 +127,6 @@ func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
 	fbProfile := getProfile(accessTokenResponse)
 	user := model.Client{Name: fbProfile.Name, Email: fbProfile.Email, Authorised: 0, Tokens: model.Tokens{Facebook: accessTokenResponse}}
 	user.Id = model.GenerateClientId(user)
-
 
 	Users[user.Id] = user
 	newUserCookie(w, user.Id)

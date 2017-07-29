@@ -1,15 +1,15 @@
 package controller
 
 import (
-	"net/http"
 	"fmt"
-	"github.com/sequoiia/unifi-proper-portal/model"
 	"github.com/gorilla/mux"
+	"github.com/sequoiia/unifi-proper-portal/model"
+	"net/http"
 )
 
 var Users map[string]model.Client = make(map[string]model.Client)
 
-func UsersView(w http.ResponseWriter, r * http.Request) {
+func UsersView(w http.ResponseWriter, r *http.Request) {
 	var listHTML string = "<html>"
 
 	for k, v := range Users {
@@ -31,7 +31,7 @@ func UsersView(w http.ResponseWriter, r * http.Request) {
 	w.Write([]byte(listHTML))
 }
 
-func UsersDeleteApi(w http.ResponseWriter, r * http.Request) {
+func UsersDeleteApi(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var success bool = false
 
@@ -51,7 +51,7 @@ func UsersDeleteApi(w http.ResponseWriter, r * http.Request) {
 	}
 }
 
-func UsersAuthorisationApi(w http.ResponseWriter, r * http.Request) {
+func UsersAuthorisationApi(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	clientId := vars["clientid"]
 	authCode := r.URL.Query().Get("authorisation")

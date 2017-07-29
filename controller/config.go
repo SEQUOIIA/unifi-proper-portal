@@ -6,8 +6,8 @@ import (
 )
 
 type ConfigS struct {
-	ClientId		string
-	ClientSecret	string
+	ClientId     string
+	ClientSecret string
 }
 
 var Config ConfigS
