@@ -127,7 +127,7 @@ func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
 	log.Println(accessTokenResponse)
 
 	fbProfile := getProfile(accessTokenResponse)
-	user := model.Client{Name: fbProfile.Name, Email: fbProfile.Email}
+	user := model.Client{Name: fbProfile.Name, Email: fbProfile.Email, Authorised: 0, Tokens: model.Tokens{Facebook: accessTokenResponse}}
 	user.Id = model.GenerateClientId(user)
 
 

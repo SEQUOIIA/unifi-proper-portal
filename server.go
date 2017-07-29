@@ -19,6 +19,14 @@ func main() {
 		negroni.Wrap(http.HandlerFunc(controller.UsersView)),
 	))
 
+	router.Handle("/users/auth/{clientid}", negroni.New(
+		negroni.Wrap(http.HandlerFunc(controller.UsersAuthorisationApi)),
+	))
+
+	router.Handle("/users/delete/{clientid}", negroni.New(
+		negroni.Wrap(http.HandlerFunc(controller.UsersDeleteApi)),
+	))
+
 	// fb
 	router.Handle("/social/fb/auth", negroni.New(
 		negroni.Wrap(http.HandlerFunc(controller.OAuthRedirect)),

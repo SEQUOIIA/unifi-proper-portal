@@ -20,7 +20,17 @@ func Root(w http.ResponseWriter, r * http.Request) {
 
 	if idFound {
 		if user, ok := Users[id.Value]; ok {
-			output = fmt.Sprintf("Name: %s | Email: %s | ID: %s", user.Name, user.Email, user.Id)
+			switch user.Authorised {
+			case 2:
+				fbProfile := getProfile(user.Tokens.Facebook)
+				output = fmt.Sprintf("<html><img src=\"%s\">Hi %s. You're authorised to use this network. Proceed as you see fit.</html>", fbProfile.Picture.Data.Url, user.Name)
+			case 1:
+				output = fmt.Sprintf("<html>Hi %s. You're unauthorised to use this network. Contact the administrator of this network for further information.</html>", user.Name)
+			case 0:
+				output = "<html>Awaiting authorisation.</html>"
+			}
+
+			//output = fmt.Sprintf("Name: %s | Email: %s | ID: %s", user.Name, user.Email, user.Id)
 		} else {
 			idFound = false
 		}
