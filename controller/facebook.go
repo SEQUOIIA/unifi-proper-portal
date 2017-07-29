@@ -105,7 +105,7 @@ func newUserCookie(w http.ResponseWriter, id string) {
 	var cookies []*http.Cookie
 	*/
 	var idCookie *http.Cookie = &http.Cookie{
-		Name: "UNIFI_ID",
+		Name: "UPP_ID",
 		Value: id,
 		Path: "/",
 		Domain: "localhost",

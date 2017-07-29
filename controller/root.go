@@ -9,7 +9,7 @@ import (
 func Root(w http.ResponseWriter, r * http.Request) {
 	var output string = ""
 	var idFound bool = true
-	id, err := r.Cookie("UNIFI_ID")
+	id, err := r.Cookie("UPP_ID")
 	if err != nil {
 		if err != http.ErrNoCookie {
 			log.Fatal(err)
