@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	controller.LoadConfig() // Load cconfig.yaml
+	controller.LoadConfig() // Load config.yaml
 	router := mux.NewRouter()
 
 	router.Handle("/", negroni.New(
