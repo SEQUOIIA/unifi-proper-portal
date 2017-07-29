@@ -11,15 +11,8 @@ var graphBaseURL string = "https://graph.facebook.com"
 
 var HttpClient * http.Client = http.DefaultClient
 
-var Users map[string]model.Client = make(map[string]model.Client)
 
-type oAuth_accessTokenResponse struct {
-	AccessToken		string	`json:"access_token"`
-	TokenType		string	`json:"token_type"`
-	ExpiresIn		int64	`json:"expires_in"`
-}
-
-func convertCodeToShortLivedToken(code string) * oAuth_accessTokenResponse {
+func convertCodeToShortLivedToken(code string) *model.OAuth_accessTokenResponse {
 	req, err := http.NewRequest("GET", graphBaseURL + "/v2.10/oauth/access_token", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -39,7 +32,7 @@ func convertCodeToShortLivedToken(code string) * oAuth_accessTokenResponse {
 
 
 	jDecoder := json.NewDecoder(resp.Body)
-	var accessTokenResponse * oAuth_accessTokenResponse = &oAuth_accessTokenResponse{}
+	var accessTokenResponse *model.OAuth_accessTokenResponse = &model.OAuth_accessTokenResponse{}
 	err = jDecoder.Decode(accessTokenResponse)
 	if err != nil {
 		log.Fatal(err)
@@ -48,7 +41,7 @@ func convertCodeToShortLivedToken(code string) * oAuth_accessTokenResponse {
 	return accessTokenResponse
 }
 
-func convertShortLivedTokenToLongLivedToken(atr * oAuth_accessTokenResponse) {
+func convertShortLivedTokenToLongLivedToken(atr *model.OAuth_accessTokenResponse) {
 	req, err := http.NewRequest("GET", graphBaseURL + "/oauth/access_token", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -67,7 +60,7 @@ func convertShortLivedTokenToLongLivedToken(atr * oAuth_accessTokenResponse) {
 	}
 
 	jDecoder := json.NewDecoder(resp.Body)
-	*atr = oAuth_accessTokenResponse{}
+	*atr = model.OAuth_accessTokenResponse{}
 	err = jDecoder.Decode(atr)
 	if err != nil {
 		log.Fatal(err)
@@ -76,7 +69,7 @@ func convertShortLivedTokenToLongLivedToken(atr * oAuth_accessTokenResponse) {
 	//return atr
 }
 
-func getProfile(atr * oAuth_accessTokenResponse) * model.FacebookUserNormal{
+func getProfile(atr *model.OAuth_accessTokenResponse) * model.FacebookUserNormal{
 	req, err := http.NewRequest("GET", graphBaseURL + "/v2.9/me", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -125,7 +118,7 @@ func OAuthRedirect(w http.ResponseWriter, r * http.Request) {
 	code := r.URL.Query().Get("code")
 
 	// Convert code to short-lived access token
-	var accessTokenResponse * oAuth_accessTokenResponse = convertCodeToShortLivedToken(code)
+	var accessTokenResponse *model.OAuth_accessTokenResponse = convertCodeToShortLivedToken(code)
 	log.Println(accessTokenResponse)
 
 	// Exchange the short-lived access token for a long-lived access token
