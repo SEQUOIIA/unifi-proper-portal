@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"log"
 	"encoding/json"
-	"faker.clausen/root/unifi-proper-portal/model"
+	"github.com/sequoiia/unifi-proper-portal/model"
 )
 
 var graphBaseURL string = "https://graph.facebook.com"

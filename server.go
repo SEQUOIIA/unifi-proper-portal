@@ -4,7 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 	"net/http"
-	"faker.clausen/root/unifi-proper-portal/controller"
+	"github.com/sequoiia/unifi-proper-portal/controller"
 )
 
 func main() {
