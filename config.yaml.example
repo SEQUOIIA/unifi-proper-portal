@@ -7,4 +7,7 @@ unifi:
   baseurl: inserthere // e.g. 'https://unifi:8443'
   site: inserthere // e.g. 'default'
   insecuremode: inserthere // Either 'true' or 'false'
+allowedsubnets:
+  - inserthere // e.g. '192.168.1.0/24'
+  - inserthere // e.g. '192.168.50.0/24'
 ...

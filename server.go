@@ -15,21 +15,19 @@ func main() {
 		negroni.Wrap(http.HandlerFunc(controller.Root)),
 	))
 
-	router.Handle("/users", negroni.New(
-		negroni.Wrap(http.HandlerFunc(controller.UsersView)),
-	))
-
-	router.Handle("/users/auth/{clientid}", negroni.New(
-		negroni.Wrap(http.HandlerFunc(controller.UsersAuthorisationApi)),
-	))
-
-	router.Handle("/users/delete/{clientid}", negroni.New(
-		negroni.Wrap(http.HandlerFunc(controller.UsersDeleteApi)),
+	router.PathPrefix("/users").Handler(negroni.New(
+		negroni.HandlerFunc(controller.SubnetFenceMiddleware),
+		negroni.Wrap(controller.NewUsersRouter()),
 	))
 
 	// fb
 	router.Handle("/social/fb/auth", negroni.New(
 		negroni.Wrap(http.HandlerFunc(controller.OAuthRedirect)),
+	))
+
+	// unifi callback
+	router.Handle("/guest/s/{site}", negroni.New(
+		negroni.Wrap(http.HandlerFunc(controller.UniFiCallback)),
 	))
 
 	n := negroni.New(negroni.NewRecovery())
