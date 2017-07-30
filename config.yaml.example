@@ -1,4 +1,10 @@
 ---
 clientid: inserthere
 clientsecret: inserthere
+unifi:
+  username: inserthere e.g. 'ubnt'
+  password: inserthere // e.g. 'ubnt'
+  baseurl: inserthere // e.g. 'https://unifi:8443'
+  site: inserthere // e.g. 'default'
+  insecuremode: inserthere // Either 'true' or 'false'
 ...
