@@ -5,9 +5,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/sequoiia/unifi-proper-portal/model"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
@@ -125,20 +123,22 @@ func (c *Client) Login() error {
 		return err
 	}
 
-	resp, err := c.doRequest(req, nil, false)
+	_, err = c.doRequest(req, nil, true)
 	if err != nil {
 		return err
 	}
 
-	tmpbody, err := ioutil.ReadAll(resp.Body)
+	/*
+		tmpbody, err := ioutil.ReadAll(resp.Body)
 
-	log.Println(string(tmpbody))
+		log.Println(string(tmpbody))
 
-	for i := 0; i < len(resp.Cookies()); i++ {
-		cookie := resp.Cookies()[i]
-		fmt.Printf("%s : %s\n", cookie.Name, cookie.Value)
-		fmt.Println(cookie.String())
-	}
+		for i := 0; i < len(resp.Cookies()); i++ {
+			cookie := resp.Cookies()[i]
+			fmt.Printf("%s : %s\n", cookie.Name, cookie.Value)
+			fmt.Println(cookie.String())
+		}
 
+	*/
 	return nil
 }

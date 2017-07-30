@@ -28,7 +28,13 @@ func NewUsersRouter() *mux.Router {
 }
 
 func SubnetFenceMiddleware(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	ip := parseIp(r.RemoteAddr)
+	var ip net.IP
+
+	if Config.ProxyMode {
+		ip = net.ParseIP(r.Header.Get("X-Forwarded-For"))
+	} else {
+		ip = parseIp(r.RemoteAddr)
+	}
 	var approved bool = false
 
 	for i := 0; i < len(Config.AllowedSubnets); i++ {

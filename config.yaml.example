@@ -1,6 +1,8 @@
 ---
 clientid: inserthere
 clientsecret: inserthere
+proxymode: inserthere // Either 'true' or 'false'
+domain: inserthere // e.g. 'localhost'
 unifi:
   username: inserthere e.g. 'ubnt'
   password: inserthere // e.g. 'ubnt'

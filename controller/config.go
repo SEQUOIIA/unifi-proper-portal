@@ -10,6 +10,8 @@ import (
 type ConfigS struct {
 	ClientId     string
 	ClientSecret string
+	ProxyMode    bool
+	Domain       string
 	UniFi        struct {
 		Username     string
 		Password     string
@@ -75,6 +77,8 @@ func LoadConfig() {
 	Config = ConfigS{}
 	Config.ClientId = viper.GetString("clientid")
 	Config.ClientSecret = viper.GetString("clientsecret")
+	Config.ProxyMode = viper.GetBool("proxymode")
+	Config.Domain = viper.GetString("domain")
 	unifiVars := viper.GetStringMap("unifi")
 	Config.UniFi.Username = unifiVars["username"].(string)
 	Config.UniFi.Password = unifiVars["password"].(string)

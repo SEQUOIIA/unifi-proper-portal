@@ -13,7 +13,7 @@ func UsersView(w http.ResponseWriter, r *http.Request) {
 	var listHTML string = "<html>"
 
 	for k, v := range Users {
-		listHTML = listHTML + fmt.Sprintf("Name: %s | Email: %s | ID: %s", v.Name, v.Email, k)
+		listHTML = listHTML + fmt.Sprintf("Name: %s | Email: %s | ID: %s | Mac: %s", v.Name, v.Email, k, v.Device)
 
 		switch v.Authorised {
 		case 0:
@@ -68,6 +68,11 @@ func UsersAuthorisationApi(w http.ResponseWriter, r *http.Request) {
 				user.Authorised = 2
 				Users[clientId] = user
 				set = true
+
+				Uclient.AuthoriseGuest(model.UniFiGuestAuthoriseRequest{
+					Mac:     user.Device,
+					Minutes: 0,
+				})
 			default:
 				w.WriteHeader(400)
 				w.Write([]byte("Invalid"))

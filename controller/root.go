@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"github.com/sequoiia/unifi-proper-portal/model"
 	"log"
 	"net/http"
 )
@@ -38,7 +39,9 @@ func Root(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(200)
 	if !idFound {
-		output = fmt.Sprintf("<html>Captive portal page<br><a href=\"https://www.facebook.com/v2.9/dialog/oauth?client_id=%s&redirect_uri=http://localhost:8080/social/fb/auth&response_type=code&scope=public_profile,email,user_friends\">FB Login</a></html>", Config.ClientId)
+		unifiDetails := model.GetUniFiGuestCookies(r)
+		log.Println(unifiDetails.ClientMacAddress)
+		output = fmt.Sprintf("<html>Captive portal page<br><a href=\"https://www.facebook.com/v2.9/dialog/oauth?client_id=%s&redirect_uri=http://%s/social/fb/auth&response_type=code&scope=public_profile,email,user_friends\">FB Login</a></html>", Config.ClientId, Config.Domain)
 	}
 	w.Write([]byte(output))
 }

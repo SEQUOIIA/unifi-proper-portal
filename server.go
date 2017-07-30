@@ -15,6 +15,11 @@ func main() {
 		negroni.Wrap(http.HandlerFunc(controller.Root)),
 	))
 
+	router.Handle("/users", negroni.New(
+		negroni.HandlerFunc(controller.SubnetFenceMiddleware),
+		negroni.Wrap(http.HandlerFunc(controller.UsersView)),
+	))
+
 	router.PathPrefix("/users").Handler(negroni.New(
 		negroni.HandlerFunc(controller.SubnetFenceMiddleware),
 		negroni.Wrap(controller.NewUsersRouter()),
@@ -26,7 +31,7 @@ func main() {
 	))
 
 	// unifi callback
-	router.Handle("/guest/s/{site}", negroni.New(
+	router.Handle("/guest/s/{site}/", negroni.New(
 		negroni.Wrap(http.HandlerFunc(controller.UniFiCallback)),
 	))
 

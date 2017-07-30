@@ -13,6 +13,7 @@ type Client struct {
 	Id         string
 	Authorised uint8 // 0 = none, 1 = false, 2 = true
 	Tokens     Tokens
+	Device     string
 }
 
 type Tokens struct {

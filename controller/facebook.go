@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sequoiia/unifi-proper-portal/model"
 	"log"
 	"net/http"
@@ -19,7 +20,7 @@ func convertCodeToShortLivedToken(code string) *model.OAuth_accessTokenResponse 
 
 	queries := req.URL.Query()
 	queries.Add("client_id", Config.ClientId)
-	queries.Add("redirect_uri", "http://localhost:8080/social/fb/auth")
+	queries.Add("redirect_uri", fmt.Sprintf("http://%s/social/fb/auth", Config.Domain))
 	queries.Add("client_secret", Config.ClientSecret)
 	queries.Add("code", code)
 	req.URL.RawQuery = queries.Encode()
@@ -106,7 +107,7 @@ func newUserCookie(w http.ResponseWriter, id string) {
 		Name:   "UPP_ID",
 		Value:  id,
 		Path:   "/",
-		Domain: "localhost",
+		Domain: Config.Domain,
 	}
 
 	http.SetCookie(w, idCookie)
@@ -114,6 +115,7 @@ func newUserCookie(w http.ResponseWriter, id string) {
 
 func OAuthRedirect(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
+	unifiDetails := model.GetUniFiGuestCookies(r)
 
 	// Convert code to short-lived access token
 	var accessTokenResponse *model.OAuth_accessTokenResponse = convertCodeToShortLivedToken(code)
@@ -127,10 +129,12 @@ func OAuthRedirect(w http.ResponseWriter, r *http.Request) {
 	fbProfile := getProfile(accessTokenResponse)
 	user := model.Client{Name: fbProfile.Name, Email: fbProfile.Email, Authorised: 0, Tokens: model.Tokens{Facebook: accessTokenResponse}}
 	user.Id = model.GenerateClientId(user)
+	user.Device = unifiDetails.ClientMacAddress
 
 	Users[user.Id] = user
 	newUserCookie(w, user.Id)
 
-	w.WriteHeader(200)
-	w.Write([]byte("gg"))
+	//w.WriteHeader(200)
+	//w.Write([]byte("gg"))
+	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 }
