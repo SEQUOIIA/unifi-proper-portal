@@ -20,6 +20,10 @@ type ConfigS struct {
 		InsecureMode bool
 	}
 	AllowedSubnets []Subnet
+	Custom         struct {
+		Name    string
+		Subtext string
+	}
 }
 
 type Subnet struct {
@@ -29,6 +33,8 @@ type Subnet struct {
 }
 
 var Config ConfigS
+
+const STATICPATH string = "static/"
 
 func AddAllowedSubnet(s string) error {
 	ip, ipnet, err := net.ParseCIDR(s)
@@ -90,4 +96,7 @@ func LoadConfig() {
 	for i := 0; i < len(allowedSubnets); i++ {
 		AddAllowedSubnet(allowedSubnets[i])
 	}
+	customVars := viper.GetStringMapString("custom")
+	Config.Custom.Name = customVars["name"]
+	Config.Custom.Subtext = customVars["subtext"]
 }

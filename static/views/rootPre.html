@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+    <title>UniFi proper portal</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="content">
+        <h2 class="title">{{.Name}} guest WiFi</h2>
+        <h3 class="title">{{.Subtext}}</h3>
+
+        <div class="voucherbox">
+            <p class="centerText">Enter the voucher code that you have been given below</p>
+            <div style="text-align: center">
+                <input id="vouchercode" placeholder="e.g. 5834571">
+                <button >Continue</button>
+            </div>
+        </div>
+
+        <p class="centerText bigtext">OR</p>
+
+        <div class="fbbox">
+            <p class="centerText" style="margin-bottom: 10px; margin-top: 5px">Get internet by logging in with Facebook.</p>
+            <p class="centerText" style="text-align: center">If you're a friend with anyone within {{.Name}} on Facebook, your device will be granted instant access to the internet. If not, you will be put on a list pending approval.</p>
+            <a class="centerText" href="https://www.facebook.com/v2.9/dialog/oauth?client_id={{.ClientId}}&redirect_uri=http://{{.RedirectUri}}/social/fb/auth&response_type=code&scope=public_profile,email,user_friends">
+                <img width="247" height="40" src="/assets/imgs/fb_button.png">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

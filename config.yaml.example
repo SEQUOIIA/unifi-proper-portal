@@ -12,4 +12,7 @@ unifi:
 allowedsubnets:
   - inserthere // e.g. '192.168.1.0/24'
   - inserthere // e.g. '192.168.50.0/24'
+custom:
+  name: inserthere // e.g. "xx corp"
+  subtext: inserthere // e.g. "slogan"
 ...

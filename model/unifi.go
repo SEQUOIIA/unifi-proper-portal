@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -27,6 +28,10 @@ type UniFiGuestAuthoriseRequest struct {
 	Bytes   *float64 `json:"bytes,omitempty"`
 }
 
+type UniFiGuestUnauthoriseRequest struct {
+	Mac string `json:"mac"`
+}
+
 func GetUniFiGuestFromCallback(r *http.Request) UniFiCallbackGuest {
 	u := UniFiCallbackGuest{}
 	u.ClientMacAddress = r.URL.Query().Get("id")
@@ -45,40 +50,48 @@ func GetUniFiGuestFromCallback(r *http.Request) UniFiCallbackGuest {
 	return u
 }
 
-func GetUniFiGuestCookies(r *http.Request) UniFiCallbackGuest {
+func GetUniFiGuestCookies(r *http.Request) (UniFiCallbackGuest, error) {
 	u := UniFiCallbackGuest{}
 	var err error
 
 	u.ClientMacAddress, err = getCookieValue(r, "UPP_clientmac")
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 
 	u.AccessPointMacAddress, err = getCookieValue(r, "UPP_apmac")
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 
 	u.RedirectUrl, err = getCookieValue(r, "UPP_redirecturl")
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 
 	u.Ssid, err = getCookieValue(r, "UPP_ssid")
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 
 	timestamp, err := getCookieValue(r, "UPP_timestamp")
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 	u.Timestamp, err = strconv.ParseInt(timestamp, 10, 64)
 	if err != nil {
-		log.Println(err)
+		return u, err
 	}
 
-	return u
+	return u, nil
+}
+
+func printAllCookies(r *http.Request) {
+	cookies := r.Cookies()
+
+	for i := 0; i < len(cookies); i++ {
+		fmt.Printf("%s\n", cookies[i].String())
+	}
 }
 
 func getCookieValue(r *http.Request, key string) (string, error) {

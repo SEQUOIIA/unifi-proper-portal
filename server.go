@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
 	"github.com/sequoiia/unifi-proper-portal/controller"
 	"github.com/urfave/negroni"
@@ -34,6 +35,10 @@ func main() {
 	router.Handle("/guest/s/{site}/", negroni.New(
 		negroni.Wrap(http.HandlerFunc(controller.UniFiCallback)),
 	))
+
+	// static assets
+	assets := http.StripPrefix("/assets/", http.FileServer(rice.MustFindBox("static/build").HTTPBox()))
+	router.PathPrefix("/assets/").Handler(assets)
 
 	n := negroni.New(negroni.NewRecovery())
 	n.UseHandler(router)

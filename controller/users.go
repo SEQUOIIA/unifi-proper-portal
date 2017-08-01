@@ -52,6 +52,7 @@ func UsersDeleteApi(w http.ResponseWriter, r *http.Request) {
 }
 
 func UsersAuthorisationApi(w http.ResponseWriter, r *http.Request) {
+	UniFiClientInit()
 	vars := mux.Vars(r)
 	clientId := vars["clientid"]
 	authCode := r.URL.Query().Get("authorisation")
@@ -64,6 +65,10 @@ func UsersAuthorisationApi(w http.ResponseWriter, r *http.Request) {
 				user.Authorised = 1
 				Users[clientId] = user
 				set = true
+
+				Uclient.UnauthoriseGuest(model.UniFiGuestUnauthoriseRequest{
+					Mac: user.Device,
+				})
 			case "2":
 				user.Authorised = 2
 				Users[clientId] = user

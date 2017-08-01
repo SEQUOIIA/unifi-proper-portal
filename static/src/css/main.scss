@@ -1,0 +1,337 @@
+/*
+    KEA 3rd Semester web-programming exercise
+    Copyright (C) 2017  Emil Hummel Clausen <sequoiia>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program(LICENSE in root directory).  If not, see <http://www.gnu.org/licenses/>.
+    Email: emil@hummel.yt
+ */
+@import 'reset';
+@import 'bourbon/bourbon';
+@import 'control-panel';
+@import 'colours';
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: $bg-grey;
+}
+
+h2 {
+  font-size: 2.8em;
+}
+
+.voucherbox {
+  color: $text-bright-grey;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+
+  p {
+    margin-bottom: 8px;
+  }
+
+  input {
+    font-size: 1.4em;
+    justify-content: center;
+  }
+
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: #f7f7f7;
+    padding: 6px 15px 6px 14px;
+    justify-content: center;
+    display: inline-flex;
+
+    &:hover {
+      background-color: #46a14a;
+      cursor: pointer;
+    }
+  }
+
+  margin-bottom: 10px;
+}
+
+.fbbox {
+  display: flex;
+  flex-direction: column;
+  img {
+    padding-top: 10px;
+    margin: 0 auto;
+
+    &:hover {
+      filter: brightness(90%);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  p {
+    color: $text-bright-grey;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .bigtext {
+    font-size: 5em;
+    color: #b793de;
+  }
+}
+
+.authorisedUserWelcome {
+  display: flex;
+  flex-direction: column;
+
+  .profilepicture {
+    border-radius: 50%;
+  }
+
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: #f7f7f7;
+    padding: 6px 15px 6px 15px;
+    //width: 70px;
+
+    &:hover {
+      background-color: #46a14a;
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: $mobile-cutoff) {
+      padding: 12px 30px 12px 30px;
+      font-size: 1.7em;
+     // background-color: #f0697a;
+    }
+  }
+}
+
+#board {
+  background-color: $brighter-red;
+}
+
+.innerBoard {
+  flex: 1;
+  padding-top: 5px;
+  color: $sorta-white;
+  border-right: 4px solid rgba(222, 230, 133, 1);
+  border-left: 4px solid rgba(222, 230, 133, 1);
+
+  span {
+    margin-top: 2px;
+  }
+
+  @media screen and (max-width: $mobile-cutoff) {
+    border-bottom: 4px solid rgba(222, 230, 133, 1);
+    border-top: 4px solid rgba(222, 230, 133, 1);
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+.centerText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team {
+  //display: inline;
+  flex: 2;
+  //margin-top: 5px;
+
+  .header {
+    //border-bottom: 4px solid rgba(222, 230, 133, 1);
+    display: flex;
+    font-size: 2em;
+    //margin-top: 2px;
+
+    .teamTitle {
+      margin-left: 5px;
+      margin-right: 10px;
+      //padding-bottom: 4px;
+      color: rgba(253, 255, 255, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .score {
+      color: rgba(253, 255, 255, 1);
+      padding-left: 3px;
+      padding-right: 3px;
+      border: 4px solid $bright-green;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (max-width: $mobile-cutoff) {
+      margin-top: 5px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .content {
+    margin-top: 6px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+
+    p {
+      @media screen and (max-width: $mobile-cutoff) {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    ul li {
+      @media screen and (max-width: $mobile-cutoff) {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+  }
+
+}
+
+.footer {
+  display: flex;
+
+  h2 {
+    @media screen and (max-width: $mobile-cutoff - 200px) {
+      flex: 1;
+    }
+  }
+
+  .phuongImg {
+    height: 35px;
+    width: 25px;
+    margin-left: 7px;
+    @media screen and (max-width: $mobile-cutoff - 200px) {
+      flex: 1;
+      margin-left: 0;
+      height: 70px;
+      width: 50px;
+    }
+  }
+
+  @media screen and (max-width: $mobile-cutoff - 200px) {
+    flex-direction: column;
+  }
+}
+
+.teams {
+  background-color: $brighter-green;
+  display: flex;
+
+  @media screen and (max-width: $mobile-cutoff) {
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+.container {
+  max-width: 50em;
+  margin: 0 auto;
+
+  a {
+    color: $text-bright-grey;
+  }
+}
+
+.advert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $bright-red;
+  padding-bottom: 10px;
+  padding-top: 8px;
+}
+
+.title {
+  padding-top: 8px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: $bright-grey;
+}
+
+#phuong {
+  -webkit-animation: phuongSpin 4s infinite linear;
+  animation: phuongSpin 4s infinite linear;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes phuongSpin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes phuongSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/*
+Animation made by Tobias Ahlin, can be found here: https://github.com/tobiasahlin/SpinKit
+License can be found in notice.txt on https://github.com/sequoiia/unifi-proper-portal or /notice.txt
+ */
+.awaitingAuth {
+  width: 40px;
+  height: 40px;
+  margin: 30px auto;
+  background-color: #ffffff;
+
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0)
+  }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}

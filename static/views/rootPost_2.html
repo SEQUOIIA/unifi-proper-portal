@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+    <title>UniFi proper portal</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="content">
+        <h2 class="title">{{.Name}} guest WiFi</h2>
+        <h3 class="title">{{.Subtext}}</h3>
+
+        <h3 class="centerText" style="padding-top: 30px; font-size: 2.3em; color: #9fe83b">Authorised</h3>
+        <div class="authorisedUserWelcome">
+            <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px">
+                <img class="profilepicture" src="{{.ProfilePictureUrl}}">
+                <p class="centerText" style="font-size: 1.7em; text-align: center; padding-left: 10px;">Hi {{.UserName}}.</p>
+            </div>
+            <p class="centerText" style="padding-top: 7px; font-size: 1.7em; text-align: center">You're authorised to use this network. Proceed as you see fit.</p>
+
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 8px;">
+            <a href="https://google.com"><button>Continue</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -115,7 +115,12 @@ func newUserCookie(w http.ResponseWriter, id string) {
 
 func OAuthRedirect(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
-	unifiDetails := model.GetUniFiGuestCookies(r)
+	unifiDetails, err := model.GetUniFiGuestCookies(r)
+	if err != nil {
+		if err != http.ErrNoCookie {
+			log.Fatal(err)
+		}
+	}
 
 	// Convert code to short-lived access token
 	var accessTokenResponse *model.OAuth_accessTokenResponse = convertCodeToShortLivedToken(code)

@@ -44,3 +44,30 @@ func (c *Client) AuthoriseGuest(data model.UniFiGuestAuthoriseRequest) error {
 	return nil
 }
 
+func (c *Client) UnauthoriseGuest(data model.UniFiGuestUnauthoriseRequest) error {
+	var payload struct {
+		Command string `json:"cmd"`
+		Mac     string `json:"mac"`
+	}
+	payload.Command = "unauthorize-guest"
+	payload.Mac = data.Mac
+
+	req, err := c.createRequest(http.MethodPost, fmt.Sprintf("/api/s/%s/cmd/stamgr", c.Config.Site), payload)
+	if err != nil {
+		return err
+	}
+
+	resp, err := c.doRequest(req, nil, false)
+	if err != nil {
+		return err
+	}
+
+	tmpbody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(string(tmpbody))
+
+	return nil
+}

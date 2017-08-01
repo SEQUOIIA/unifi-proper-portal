@@ -1,0 +1,32 @@
+{
+  "name": "unifi-proper-portal",
+  "version": "1.0.0",
+  "description": "x",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:sequoiia/unifi-proper-portal.git"
+  },
+  "author": "Emil H. Clausen <sequoiia>",
+  "dependencies": {
+    "autoprefixer": "^7.0.1",
+    "awesome-typescript-loader": "^3.1.3",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "bourbon": "^4.3.4",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.5.2",
+    "postcss-loader": "^2.0.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.17.0",
+    "typescript": "^2.3.2",
+    "uglifyjs": "^2.4.10",
+    "webpack": "^2.5.1"
+  }
+}

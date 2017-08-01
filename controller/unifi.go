@@ -10,7 +10,7 @@ import (
 
 var Uclient *unifi.Client
 
-func UniFiCallback(w http.ResponseWriter, r *http.Request) {
+func UniFiClientInit() {
 	if Uclient == nil {
 		Uclient = unifi.NewClient(&unifi.ClientConfig{
 			Username:        Config.UniFi.Username,
@@ -25,6 +25,10 @@ func UniFiCallback(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 	}
+}
+
+func UniFiCallback(w http.ResponseWriter, r *http.Request) {
+	UniFiClientInit()
 
 	guestDetails := model.GetUniFiGuestFromCallback(r)
 
