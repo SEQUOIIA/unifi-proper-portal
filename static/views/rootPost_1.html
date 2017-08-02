@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+    <script src="/assets/bundle.js"></script>
     <title>UniFi proper portal</title>
 </head>
 <body>
@@ -17,5 +18,8 @@
         <p class="centerText" style="padding-top: 7px; font-size: 1.7em; text-align: center">Hi {{.UserName}}. You're unauthorised to use this network. Contact the administrator of this network for further information.</p>
     </div>
 </div>
+<script>
+    var authstate = 1;
+</script>
 </body>
 </html>

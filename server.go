@@ -6,6 +6,7 @@ import (
 	"github.com/sequoiia/unifi-proper-portal/controller"
 	"github.com/urfave/negroni"
 	"net/http"
+	"strings"
 )
 
 func main() {
@@ -24,6 +25,10 @@ func main() {
 	router.PathPrefix("/users").Handler(negroni.New(
 		negroni.HandlerFunc(controller.SubnetFenceMiddleware),
 		negroni.Wrap(controller.NewUsersRouter()),
+	))
+
+	router.Handle("/api/status", negroni.New(
+		negroni.Wrap(http.HandlerFunc(controller.ApiStatus)),
 	))
 
 	// fb
