@@ -54,27 +54,27 @@ func GetUniFiGuestCookies(r *http.Request) (UniFiCallbackGuest, error) {
 	u := UniFiCallbackGuest{}
 	var err error
 
-	u.ClientMacAddress, err = getCookieValue(r, "UPP_clientmac")
+	u.ClientMacAddress, err = GetCookieValue(r, "UPP_clientmac")
 	if err != nil {
 		return u, err
 	}
 
-	u.AccessPointMacAddress, err = getCookieValue(r, "UPP_apmac")
+	u.AccessPointMacAddress, err = GetCookieValue(r, "UPP_apmac")
 	if err != nil {
 		return u, err
 	}
 
-	u.RedirectUrl, err = getCookieValue(r, "UPP_redirecturl")
+	u.RedirectUrl, err = GetCookieValue(r, "UPP_redirecturl")
 	if err != nil {
 		return u, err
 	}
 
-	u.Ssid, err = getCookieValue(r, "UPP_ssid")
+	u.Ssid, err = GetCookieValue(r, "UPP_ssid")
 	if err != nil {
 		return u, err
 	}
 
-	timestamp, err := getCookieValue(r, "UPP_timestamp")
+	timestamp, err := GetCookieValue(r, "UPP_timestamp")
 	if err != nil {
 		return u, err
 	}
@@ -94,7 +94,7 @@ func printAllCookies(r *http.Request) {
 	}
 }
 
-func getCookieValue(r *http.Request, key string) (string, error) {
+func GetCookieValue(r *http.Request, key string) (string, error) {
 	cookie, err := r.Cookie(key)
 	if err != nil {
 		return "", err
