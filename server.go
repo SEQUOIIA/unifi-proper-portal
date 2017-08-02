@@ -43,9 +43,23 @@ func main() {
 
 	// static assets
 	assets := http.StripPrefix("/assets/", http.FileServer(rice.MustFindBox("static/build").HTTPBox()))
-	router.PathPrefix("/assets/").Handler(assets)
+	//router.PathPrefix("/assets/").Handler(assets)
+	router.PathPrefix("/assets/").Handler(negroni.New(
+		negroni.HandlerFunc(fixContentType),
+		negroni.Wrap(assets),
+	))
 
 	n := negroni.New(negroni.NewRecovery())
 	n.UseHandler(router)
 	n.Run("0.0.0.0:8080")
+}
+
+func fixContentType(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	path := r.URL.Path[1:]
+
+	if strings.HasSuffix(path, ".js") {
+		rw.Header().Set("Content-Type", "application/javascript")
+	}
+
+	next(rw, r)
 }
