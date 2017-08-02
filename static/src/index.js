@@ -32,7 +32,9 @@ function checkAuth() {
                 location.reload(true);
             }
         } else {
-            window.location.replace("https://google.com");
+            if (authstate === 1) {
+                window.location.replace("https://google.com");
+            }
         }
         data = null;
         request = null;
