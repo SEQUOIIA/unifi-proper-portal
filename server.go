@@ -31,6 +31,10 @@ func main() {
 		negroni.Wrap(http.HandlerFunc(controller.ApiStatus)),
 	))
 
+	router.Handle("/api/voucher", negroni.New(
+		negroni.Wrap(http.HandlerFunc(controller.ApiVoucherConsume)),
+	))
+
 	// fb
 	router.Handle("/social/fb/auth", negroni.New(
 		negroni.Wrap(http.HandlerFunc(controller.OAuthRedirect)),

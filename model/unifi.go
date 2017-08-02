@@ -28,6 +28,23 @@ type UniFiGuestAuthoriseRequest struct {
 	Bytes   *float64 `json:"bytes,omitempty"`
 }
 
+type UniFiVoucherResponse struct {
+	Id             string   `json:"_id"`
+	AdminName      string   `json:"admin_name"`
+	Code           string   `json:"code"`
+	CreateTime     float64  `json:"create_time"`
+	Duration       float64  `json:"duration"`
+	Note           *string  `json:"note"`
+	QosOverwrite   bool     `json:"qos_overwrite"`
+	QosRateMaxDown *float64 `json:"qos_rate_max_down"`
+	QosRateMaxUp   *float64 `json:"qos_rate_max_up"`
+	QosUsageQuota  *float64 `json:"qos_usage_quota"`
+	Quota          float64  `json:"quota"`
+	Status         string   `json:"status"`
+	StatusExpires  float64  `json:"status_expires"`
+	Used           float64  `json:"used"`
+}
+
 type UniFiGuestUnauthoriseRequest struct {
 	Mac string `json:"mac"`
 }

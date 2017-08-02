@@ -3,7 +3,6 @@ package unifi
 import (
 	"fmt"
 	"github.com/sequoiia/unifi-proper-portal/model"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -29,17 +28,10 @@ func (c *Client) AuthoriseGuest(data model.UniFiGuestAuthoriseRequest) error {
 		return err
 	}
 
-	resp, err := c.doRequest(req, nil, false)
+	_, err = c.doRequest(req, nil, true)
 	if err != nil {
 		return err
 	}
-
-	tmpbody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(string(tmpbody))
 
 	return nil
 }
@@ -57,17 +49,47 @@ func (c *Client) UnauthoriseGuest(data model.UniFiGuestUnauthoriseRequest) error
 		return err
 	}
 
-	resp, err := c.doRequest(req, nil, false)
+	_, err = c.doRequest(req, nil, true)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) GetVouchers() ([]model.UniFiVoucherResponse, error) {
+	req, err := c.createRequest(http.MethodGet, fmt.Sprintf("/api/s/%s/stat/voucher", c.Config.Site), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var payload struct {
+		Data []model.UniFiVoucherResponse `json:"data"`
+	}
+
+	_, err = c.doRequest(req, &payload, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return payload.Data, nil
+}
+
+func (c *Client) RemoveVoucher(voucherId string) error {
+	var payload struct {
+		Command string `json:"cmd"`
+		Id      string `json:"_id"`
+	}
+	payload.Command = "delete-voucher"
+	payload.Id = voucherId
+
+	req, err := c.createRequest(http.MethodPost, fmt.Sprintf("/api/s/%s/cmd/hotspot", c.Config.Site), payload)
 	if err != nil {
 		return err
 	}
 
-	tmpbody, err := ioutil.ReadAll(resp.Body)
+	_, err = c.doRequest(req, nil, true)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(string(tmpbody))
-
 	return nil
 }

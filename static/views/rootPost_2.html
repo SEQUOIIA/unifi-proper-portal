@@ -17,8 +17,13 @@
         <h3 class="centerText" style="padding-top: 30px; font-size: 2.3em; color: #9fe83b">Authorised</h3>
         <div class="authorisedUserWelcome">
             <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px">
+                {{if .IsAuthedByFacebook}}
                 <img class="profilepicture" src="{{.ProfilePictureUrl}}">
                 <p class="centerText" style="font-size: 1.7em; text-align: center; padding-left: 10px;">Hi {{.UserName}}.</p>
+                {{end}}
+                {{if .IsAuthedByVoucher}}
+                <p class="centerText" style="font-size: 1.7em; text-align: center; padding-left: 10px;">Voucher code used: {{.VoucherCode}}.</p>
+                {{end}}
             </div>
             <p class="centerText" style="padding-top: 7px; font-size: 1.7em; text-align: center">You're authorised to use this network. Proceed as you see fit.</p>
 

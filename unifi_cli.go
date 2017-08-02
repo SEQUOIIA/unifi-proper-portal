@@ -21,4 +21,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	vouchers, err := cli.GetVouchers()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i := 0; i < len(vouchers); i++ {
+		log.Println(vouchers[i].Code)
+	}
 }

@@ -27,18 +27,30 @@ func Root(w http.ResponseWriter, r *http.Request) {
 	if idFound {
 		if user, ok := Users[id.Value]; ok {
 			var data struct {
-				UserName          string
-				ProfilePictureUrl string
-				Authorised        uint8
-				Name              string
-				Subtext           string
+				UserName           string
+				ProfilePictureUrl  string
+				Authorised         uint8
+				Name               string
+				Subtext            string
+				IsAuthedByFacebook bool
+				IsAuthedByVoucher  bool
+				VoucherCode        string
 			}
 			data.UserName = user.Name
 			data.Authorised = user.Authorised
-			fbProfile := getProfile(user.Tokens.Facebook)
-			data.ProfilePictureUrl = fbProfile.Picture.Data.Url
-			data.Name = Config.Custom.Name
-			data.Subtext = Config.Custom.Subtext
+
+			switch user.AuthedBy {
+			case model.AuthedByVoucher:
+				data.IsAuthedByVoucher = true
+				data.VoucherCode = user.Voucher
+			case model.AuthedByFacebook:
+				data.IsAuthedByFacebook = true
+				fbProfile := getProfile(user.Tokens.Facebook)
+				data.ProfilePictureUrl = fbProfile.Picture.Data.Url
+				data.Name = Config.Custom.Name
+				data.Subtext = Config.Custom.Subtext
+
+			}
 
 			switch user.Authorised {
 			case 2:

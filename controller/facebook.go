@@ -94,7 +94,7 @@ func getProfile(atr *model.OAuth_accessTokenResponse) *model.FacebookUserNormal 
 	return profile
 }
 
-func newUserCookie(w http.ResponseWriter, id string) {
+func NewUserCookie(w http.ResponseWriter, id string) {
 	/*
 		cJar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
 		if err != nil {
@@ -135,9 +135,10 @@ func OAuthRedirect(w http.ResponseWriter, r *http.Request) {
 	user := model.Client{Name: fbProfile.Name, Email: fbProfile.Email, Authorised: 0, Tokens: model.Tokens{Facebook: accessTokenResponse}}
 	user.Id = model.GenerateClientId(user)
 	user.Device = unifiDetails.ClientMacAddress
+	user.AuthedBy = model.AuthedByFacebook
 
 	Users[user.Id] = user
-	newUserCookie(w, user.Id)
+	NewUserCookie(w, user.Id)
 
 	//w.WriteHeader(200)
 	//w.Write([]byte("gg"))
